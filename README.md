@@ -24,9 +24,9 @@ You need to setup a .env file in this folder to support the indidual scripts.
 
 ## Before you start
 
-To see a list support networks
+These instructions will be focusing on a deploy to Mumbai, Polygon's test network, identified in Brownie as `polygon-test`. To see a list supported networks
 
-    brownie run scripts/deploy.py --network polygon-test
+    brownie networks list
 
 You need to setup a "deployer" account
 
