@@ -6,11 +6,11 @@ A Brownie-based repo for deploying and managing a Chainlink Flux-based decentral
 
 There are three separate participants involved in the running of a FluxAggregator contract. 
 
-The Client - is the owner of the FluxAggregator contract. The Client decides which oracles/node operators to allow in and submit new values to FluxAggregator. The Client also needs to monitor available funds on the contract so that node operators continue to be paid.
+**The Client** - is the owner of the FluxAggregator contract. The Client decides which oracles/node operators to allow in and submit new values to FluxAggregator. The Client also needs to monitor available funds on the contract so that node operators continue to be paid.
 
-The Node Operator/Admin - The operator/admin ensures the smooth running of the node and execution of the FluxMonitor job. They need to ensure the node has enough funds in the node wallet to submit new values to FluxAggregator. The node admin is also allowed to withdraw LINK funds paid by the Client held on the FluxAggregator contract. The node admin is identified by a wallet address which for ease-of-use should probably be a Metamask address. 
+**The Node Operator/Admin** - The operator/admin ensures the smooth running of the node and execution of the FluxMonitor job. They need to ensure the node has enough funds in the node wallet to submit new values to FluxAggregator. The node admin is also allowed to withdraw LINK funds paid by the Client held on the FluxAggregator contract. The node admin is identified by a wallet address which for ease-of-use should probably be a Metamask address. 
 
-The Node - runs the FluxMonitor jobspec, querying datasources, producing a value, and writing the latest answer to the blockchain. The frequency with which the node writes updates back to the blockchain is controlled through the jobspec.
+**The Node** - runs the FluxMonitor jobspec, querying datasources, producing a value, and writing the latest answer to the blockchain. The frequency with which the node writes updates back to the blockchain is controlled through the jobspec.
 
 The FluxAggregator contract could be deployed by any of the initial node operators involved in the project but ownership should be transferred to the client, represented by the client's associated wallet used for LINK topup payments. Technical personell on the client's side should familiarise themselves with the day-to-day responsibilities of running the FluxAggregator contract.
 
@@ -71,3 +71,7 @@ If after deploying the job you don't see and job runs appearing in the Job Run t
 ### Not topping up contract with LINK, console reports: aggregator is underfunded
 
 The Client needs to ensure that the FluxAggregator contract has enough funds to pay the oracles. The error indicates the contract has run out out funds.
+
+## Credits
+
+Firecrest photo by Alex Lours - [Original](https://en.wikipedia.org/wiki/Common_firecrest#/media/File:Common_firecrest_Franconville_03.jpg)
