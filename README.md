@@ -21,6 +21,7 @@ You need to setup a .env file in this folder to support the indidual scripts.
     WEB3_INFURA_PROJECT_ID=...
     ETHERSCAN_TOKEN=...
     POLYGONSCAN_TOKEN=...
+    ARBISCAN_TOKEN=...
 
 ## Before you start
 
@@ -33,6 +34,8 @@ You need to setup a "deployer" account
     brownie accounts new deployer
     <you'll now be asked for the private key>
 
+# Deployment
+
 ## Step 1. Deploy & Verify
 
 The first step is to deploy the contract to the blockchain, e.g. on Polygon Mumbai. This step is followed by verification, which ensures that the sourcecode of deployed contract is visible for all to see on Polyscan (or Etherescan). Verification also allows you to interact with the contract and see its current state on sites like Polyscan and Etherscan.
@@ -40,14 +43,38 @@ The first step is to deploy the contract to the blockchain, e.g. on Polygon Mumb
 To deploy & verify run:
 
     brownie run scripts/mumbai/deploy_and_verify.py --network polygon-test
+    brownie run scripts/arbitrum-rinkeby/deploy_and_verify.py --network arbitrum-rinkeby
 
-## Step 2. Permissions
+## Step 2. Fund FluxAggregator contract
+
+Next you'll need to fund the FluxAggregator contract before you can add node operators, permitting them to submit updates:
+
+    brownie run scripts/mumbai/topup_contract.py --network polygon-test
+    brownie run scripts/arbitrum-rinkeby/topup_contract.py --network arbitrum-rinkeby
+
+## Step 3. Add Node Operators & Permissions
 
 Next you need to grant access to allow your node to submit values to the FluxAggregator.
 
     brownie run scripts/mumbai/manage_nodes.py --network polygon-test
+    brownie run scripts/arbitrum-rinkeby/manage_nodes.py --network arbitrum-rinkeby
 
+You'll need to customise the `manage_nodes.py` script every time you run it. For example to add a node operator you need populate the `added` and `addedAdmins` address lists.
 
+The `added` list specifies the new node addresses that are to be granted permission. If you're not adding new addresses, leave the list empty `[]`.
+The `addedAdmins` list specifies the admin wallets of the node operators, eg. a Metamask wallet, that the node operator will use to retrieve the LINK payments they've earned. If you're not adding new admins addresses, leave the list empty `[]`.
+
+You can use the `removed` list to specify node addresses from whom you want to remove permission to submit feed updates.
+
+# Step 4. Deploy the FluxMonitor jobspec
+
+Finally, you can now deploy the FluxMonitor job on each node involved in the network. There are example jobspecs in this repository. The most important jobspec property to get right is `contractAddress` property which should point to the FluxAggregator contract address.
+
+# Ongoing Maintenance.
+
+To continue to fund the FluxAggregator contract use the topup_contract.py script which will transfer 5LINK to the FluxAggregator contract everytime its run.
+
+Node Operators should monitor the ETH balance and incorporate the metric into their alerting systems. Node operators will repeatedly need to use their configured wallet to retrieve awarded LINK funds, swap them into ETH, and fund their nodes again.
 
 ## Troubleshooting
 
