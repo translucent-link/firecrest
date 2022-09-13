@@ -66,7 +66,7 @@ The `addedAdmins` list specifies the admin wallets of the node operators, eg. a 
 
 You can use the `removed` list to specify node addresses from whom you want to remove permission to submit feed updates.
 
-# Step 4. Deploy the FluxMonitor jobspec
+## Step 4. Deploy the FluxMonitor jobspec
 
 Finally, you can now deploy the FluxMonitor job on each node involved in the network. There are example jobspecs in this repository. The most important jobspec property to get right is `contractAddress` property which should point to the FluxAggregator contract address.
 
